@@ -4,6 +4,7 @@ import os
 from db_operations import establish_connection
 from GUI_files import main_window
 
+
 class StartWindow(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -32,7 +33,7 @@ class StartWindow(Frame):
                                relief='sunken',
                                activebackground='#4f2b64',
                                activeforeground='#ffffff',
-                               command=lambda: self.browse_files(master) )
+                               command=lambda: self.browse_files(master))
         create_database.place(x=100, y=450)
         open_database.place(x=350, y=450)
 
@@ -53,4 +54,3 @@ class StartWindow(Frame):
         master.config(menu=self.menubar)
         self.widgets(master)
         master.mainloop()
-
