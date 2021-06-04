@@ -36,6 +36,9 @@ class Table:
         else:
             raise ValueError
 
+    def remove_row(self, row_obj):
+        self.rows.remove(row_obj)
+
     def get_column_types(self):
         return [i.column_type for i in self.columns]
 
@@ -45,8 +48,14 @@ class Table:
     def get_rows(self):
         return [row.contents for row in self.rows]
 
-    def remove_row(self, row_obj):
-        self.rows.remove(row_obj)
+    def get_rows_obj(self):
+        return self.rows
+
+    def get_obj(self, content):
+        for i in self.rows:
+            if i.contents == content:
+                return i
+        return False
 
     def query(self, query):
         result = []

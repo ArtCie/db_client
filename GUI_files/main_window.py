@@ -4,7 +4,7 @@ from tkinter import ttk
 from GUI_files.add_row_window import AddRowWindow
 from GUI_files.remove_row_window import RemoveRowWindow
 from Parse import parse
-from Logic import Database, Table
+from Logic import Database
 
 from copy import deepcopy
 
@@ -24,8 +24,9 @@ class MainWindow(Frame):
         self.popup_menu = Menu(self.master, tearoff=0)
         self.display_table = ttk.Treeview(self.master)
 
-        self.add_button = Button(self.master)
+        self.add_row_button = Button(self.master)
         self.remove_row_button = Button(self.master)
+
         self.list_box = Listbox(self.master)
         self.widgets()
 
@@ -42,11 +43,13 @@ class MainWindow(Frame):
 
         self.display_content()
 
-        self.add_button.config(text="Add row", width=15, height=2, command=self.add_to_base)
-        self.add_button.place(x=70, y=20)
+        self.add_row_button.config(text="Add row", width=15, height=2, command=self.add_row)
+        self.add_row_button.place(x=70, y=20)
 
         self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
         self.remove_row_button.place(x=185, y=20)
+
+
 
     def display_tables(self):
 
@@ -99,7 +102,7 @@ class MainWindow(Frame):
                 self.display_table.insert(parent='', index=i, values=j)
             self.display_table.place(x=70, y=60)
 
-    def add_to_base(self):
+    def add_row(self):
         add_row = Toplevel()
         selection = self.list_box.curselection()
         selection = self.list_box.get(selection[0])
