@@ -57,7 +57,6 @@ class RemoveColumnWindow(Template):
         for i in self.remove_data.get_children():
             item = self.remove_data.item(i)['values'][1:]
             remove_item = self.active_table.get_col(Column(map_types[item[1]], item[0]))
-            print(remove_item)
             self.active_table.remove_column(remove_item)
         self.parent.display_content()
         self.master.withdraw()

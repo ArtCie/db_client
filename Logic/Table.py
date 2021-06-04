@@ -14,6 +14,8 @@ class Table:
         if column_obj.check_column(self.columns):
             if self.check_name(column_obj.name):
                 self.columns.append(column_obj)
+            for i in self.rows:
+                i.contents.append("")
 
     @staticmethod
     def check_name(name):
@@ -26,14 +28,12 @@ class Table:
     def remove_column(self, column_obj):
         temp = 0
         for obj in self.columns:
-            print(obj.name, column_obj.name)
             if obj.name == column_obj.name:
                 break
             temp += 1
         else:
             return
         self.columns.remove(column_obj)
-        print(temp)
         for each_row in self.rows:
             del each_row.contents[temp]
 
@@ -67,7 +67,6 @@ class Table:
 
     def get_col(self, new_col):
         for i in self.columns:
-            print(i.name, new_col.name, i.column_type, new_col.column_type)
             if i.name == new_col.name and i.column_type == new_col.column_type:
                 return i
         return None

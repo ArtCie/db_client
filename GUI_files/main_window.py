@@ -5,6 +5,7 @@ from GUI_files.add_row_window import AddRowWindow
 from GUI_files.remove_row_window import RemoveRowWindow
 from GUI_files.add_column_window import AddColumnWindow
 from GUI_files.remove_column_window import RemoveColumnWindow
+from GUI_files.add_table_window import AddTableWindow
 from Parse import parse
 from Logic import Database
 
@@ -18,18 +19,19 @@ class MainWindow(Frame):
         Frame.__init__(self, master)
         self.master = master
         self.content = content
-        self.master.geometry("700x600+000+000")
+        self.master.geometry("700x400+000+000")
         self.master['background'] = '#202020'
 
         self.get_data()
 
         self.popup_menu = Menu(self.master, tearoff=0)
-        self.display_table = ttk.Treeview(self.master)
+        self.display_table = ttk.Treeview(self.master, height=10)
 
         self.add_row_button = Button(self.master)
         self.remove_row_button = Button(self.master)
         self.add_column_button = Button(self.master)
         self.remove_column_button = Button(self.master)
+        self.add_table_button = Button(self.master)
 
         self.list_box = Listbox(self.master)
         self.widgets()
@@ -42,31 +44,35 @@ class MainWindow(Frame):
     def widgets(self):
         self.display_tables()
 
-        self.list_box.config(width=10, height=1030, bg='#493358', bd=0,
+        self.list_box.config(width=10, height=15, bg='#493358', bd=0,
                              fg='#ffffff', relief='sunken', borderwidth=0, highlightthickness=0)
 
         self.display_content()
 
         self.add_row_button.config(text="Add row", width=15, height=2, command=self.add_row)
-        self.add_row_button.place(x=70, y=20)
+        self.add_row_button.place(x=70, y=28)
 
         self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
-        self.remove_row_button.place(x=185, y=20)
+        self.remove_row_button.place(x=185, y=28)
 
         self.add_column_button.config(text="Add column", width=15, height=2, command=self.add_column)
-        self.add_column_button.place(x=300, y=20)
+        self.add_column_button.place(x=300, y=28)
 
         self.remove_column_button.config(text="Remove column", width=15, height=2, command=self.remove_column)
-        self.remove_column_button.place(x=415, y=20)
+        self.remove_column_button.place(x=415, y=28)
+
+        self.add_table_button.config(text="Add\ntable", width=9, height=2, command=self.add_table)
+        self.add_table_button.place(x=0, y=295)
 
     def display_tables(self):
+        self.list_box.delete(0, END)
 
         self.popup_menu.add_command(label="hej")
         self.popup_menu.add_command(label="hej2")
 
         self.list_box.bind("<<ListboxSelect>>", self.display_content)
 
-        self.list_box.place(x=0, y=20)
+        self.list_box.place(x=0, y=28)
         self.list_box.config(font=("Arial", 10))
 
         tables = self.database.get_tables_names()
@@ -108,7 +114,7 @@ class MainWindow(Frame):
             self.display_table.heading('#0', text='', anchor=CENTER)
             for i, j in enumerate(serialized_data):
                 self.display_table.insert(parent='', index=i, values=j)
-            self.display_table.place(x=70, y=60)
+            self.display_table.place(x=70, y=68)
 
     def add_row(self):
         add_row = Toplevel()
@@ -141,3 +147,7 @@ class MainWindow(Frame):
         current_table = self.database.get_active(selection)
 
         remove_column_window = RemoveColumnWindow(remove_column, current_table, self)
+
+    def add_table(self):
+        add_table = Toplevel()
+        add_table_window = AddTableWindow(add_table, self.database, self)
