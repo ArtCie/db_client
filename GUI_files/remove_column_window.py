@@ -7,17 +7,17 @@ from Logic.Table import Table
 from Logic.Column import Column
 
 
-class RemoveRowWindow(Template):
+class RemoveColumnWindow(Template):
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "670x500+200+200")
 
-        self.master.title("Remove row")
+        self.master.title("Remove columns")
 
         self.display_table = ttk.Treeview(self.master, selectmode='extended')
         self.display_table.place(x=20, y=20)
 
         self.remove_data = ttk.Treeview(self.master, selectmode='extended')
-        self.remove_data.place(x=400, y=20)
+        self.remove_data.place(x=365, y=20)
 
         self.button_right = Button(master)
         self.button_left = Button(master)
@@ -29,11 +29,7 @@ class RemoveRowWindow(Template):
         master.mainloop()
 
     def widgets(self):
-        Template.display_table(self.display_table, self.active_table)
-        table = Table("remove")
-        for i in zip(self.active_table.get_column_types(), self.active_table.get_column_names()):
-            table.add_column(Column(str(i[0]), i[1]))
-        Template.display_table(self.remove_data, table)
+        self.display_columns()
 
         self.button_right.config(text="=>", width=4, height=2,
                                  command=lambda: self.move(self.remove_data, self.display_table))
@@ -48,15 +44,21 @@ class RemoveRowWindow(Template):
         self.button_cancel.place(x=520, y=400)
 
     def accept_window(self):
-        msg_box = messagebox.askquestion('Delete rows', 'Are you sure you want to delete these rows?', icon='warning')
+        msg_box = messagebox.askquestion('Delete columns', 'Are you sure you want to delete these columns?', icon='warning')
         if msg_box == 'yes':
             self.remove()
 
     def remove(self):
+        map_types = {
+            "Tekst": str,
+            "Liczba całkowita": int,
+            "Liczba rzeczywista": float
+        }
         for i in self.remove_data.get_children():
             item = self.remove_data.item(i)['values'][1:]
-            remove_item = self.active_table.get_obj(item)
-            self.active_table.remove_row(remove_item)
+            remove_item = self.active_table.get_col(Column(map_types[item[1]], item[0]))
+            print(remove_item)
+            self.active_table.remove_column(remove_item)
         self.parent.display_content()
         self.master.withdraw()
 
@@ -78,3 +80,31 @@ class RemoveRowWindow(Template):
                 table_in.insert(parent='', index=index, values=item['values'])
                 index += 1
             table_out.delete(i)
+
+    def display_columns(self):
+        first_row = ['Lp.', 'Column name', 'Type']
+        self.display_table['columns'] = first_row
+        self.remove_data['columns'] = first_row
+
+        for i in first_row:
+            self.display_table.heading(i, text=i, anchor='w')
+            self.remove_data.heading(i, text=i, anchor='w')
+
+        self.set_cols_size('#1', 30)
+        self.set_cols_size('#2', 120)
+        self.set_cols_size('#3', 120)
+        self.set_cols_size('#0', 0)
+
+        map_types = {
+            str: "Tekst",
+            int: "Liczba całkowita",
+            float: "Liczba rzeczywista"
+        }
+        columns = self.active_table.get_column_names()
+        table_types = self.active_table.get_column_types()
+        for i, j in enumerate(columns):
+            self.display_table.insert(parent='', index=i, values=[i, j, map_types[table_types[i]]])
+
+    def set_cols_size(self, index, num):
+        self.display_table.column(index, width=num, stretch=NO)
+        self.remove_data.column(index, width=num, stretch=NO)

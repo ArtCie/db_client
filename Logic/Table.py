@@ -24,7 +24,18 @@ class Table:
         return True
 
     def remove_column(self, column_obj):
+        temp = 0
+        for obj in self.columns:
+            print(obj.name, column_obj.name)
+            if obj.name == column_obj.name:
+                break
+            temp += 1
+        else:
+            return
         self.columns.remove(column_obj)
+        print(temp)
+        for each_row in self.rows:
+            del each_row.contents[temp]
 
     def add_row(self, row_obj):
         types = self.get_column_types()
@@ -53,6 +64,13 @@ class Table:
             if i.contents == content:
                 return i
         return False
+
+    def get_col(self, new_col):
+        for i in self.columns:
+            print(i.name, new_col.name, i.column_type, new_col.column_type)
+            if i.name == new_col.name and i.column_type == new_col.column_type:
+                return i
+        return None
 
     def query(self, query):
         result = []
