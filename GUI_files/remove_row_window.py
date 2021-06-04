@@ -10,6 +10,9 @@ from Logic.Column import Column
 class RemoveRowWindow(Template):
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "670x500+200+200")
+
+        self.master.title("Remove rows")
+
         self.display_table = ttk.Treeview(self.master, selectmode='extended')
         self.display_table.place(x=20, y=20)
 

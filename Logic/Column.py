@@ -6,8 +6,7 @@ class Column:
     def check_column(self, columns):
         for i in columns:
             if i.name == self.name:
-                print("Column name must be unique")  # hope to implement errors later XD
-                return False
+                raise AssertionError
         return True
 
     def get_types(self):

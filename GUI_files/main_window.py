@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from GUI_files.add_row_window import AddRowWindow
 from GUI_files.remove_row_window import RemoveRowWindow
+from GUI_files.add_column_window import AddColumnWindow
 from Parse import parse
 from Logic import Database
 
@@ -26,6 +27,7 @@ class MainWindow(Frame):
 
         self.add_row_button = Button(self.master)
         self.remove_row_button = Button(self.master)
+        self.add_column_button = Button(self.master)
 
         self.list_box = Listbox(self.master)
         self.widgets()
@@ -49,7 +51,8 @@ class MainWindow(Frame):
         self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
         self.remove_row_button.place(x=185, y=20)
 
-
+        self.add_column_button.config(text="Add column", width=15, height=2, command=self.add_column)
+        self.add_column_button.place(x=300, y=20)
 
     def display_tables(self):
 
@@ -117,3 +120,11 @@ class MainWindow(Frame):
         current_table = self.database.get_active(selection)
 
         remove_window = RemoveRowWindow(remove_row, current_table, self)
+
+    def add_column(self):
+        add_column = Toplevel()
+        selection = self.list_box.curselection()
+        selection = self.list_box.get(selection[0])
+        current_table = self.database.get_active(selection)
+
+        add_column_window = AddColumnWindow(add_column, current_table, self)

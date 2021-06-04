@@ -9,6 +9,7 @@ class AddRowWindow(Template):
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "500x300+200+200")
         self.widgets()
+        self.master.title("Add row")
         master.mainloop()
 
     def widgets(self):

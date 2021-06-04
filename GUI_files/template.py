@@ -16,7 +16,6 @@ class Template(Frame):
 
         self.master['background'] = '#202020'
         self.master.geometry(size)
-        self.master.title("Insert into ")
 
     @staticmethod
     def display_table(display_table, active_table):

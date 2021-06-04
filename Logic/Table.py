@@ -11,19 +11,16 @@ class Table:
         self.rows = []
 
     def add_column(self, column_obj):
-        try:
-            if column_obj.check_column(self.columns):
-                if self.check_name(column_obj.name):
-                    self.columns.append(column_obj)
-        except AssertionError:
-            return
+        if column_obj.check_column(self.columns):
+            if self.check_name(column_obj.name):
+                self.columns.append(column_obj)
 
     @staticmethod
     def check_name(name):
         temp = name
         temp = temp.replace(" ", "")
         if len(temp) == 0:
-            raise AssertionError
+            raise ValueError
         return True
 
     def remove_column(self, column_obj):
