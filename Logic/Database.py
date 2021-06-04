@@ -35,6 +35,12 @@ class Database:
     def remove_table(self, table_obj):
         self.Tables.remove(table_obj)
 
+    def get_active(self, name):
+        for table in self.Tables:
+            if table.name == name:
+                return table
+        return False
+
     def __str__(self):
         for i in self.Tables:
             print(i)

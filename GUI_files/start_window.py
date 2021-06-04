@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 import os
-from db_operations import establish_connection
+from Parse import parse
 from GUI_files import main_window
 
 
@@ -41,7 +41,7 @@ class StartWindow(Frame):
         filename = filedialog.askopenfilename(initialdir=os.getcwd(),
                                               title=r"Select a \".json\" extension file",
                                               filetypes=[("Json file", "*.json")])
-        content = establish_connection(filename)
+        content = parse.establish_connection(filename)
         self.switch_windows(master, content)
 
     @staticmethod

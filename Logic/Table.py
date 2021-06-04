@@ -1,6 +1,6 @@
-from Column import Column
-from Database import Database
-from Row import Row
+from Logic import Column
+from Logic import Database
+from Logic import Row
 
 
 class Table:

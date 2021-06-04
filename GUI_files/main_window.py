@@ -1,38 +1,53 @@
 from tkinter import *
 from tkinter import ttk
 
-from GUI_files.pop_up_window import PopUpWindow
-from db_operations import get_tables, get_data, get_columns_names
+from GUI_files.add_row_window import PopUpWindow
+from Parse import parse
+from Logic import Database, Table
+
+from copy import deepcopy
 
 
 class MainWindow(Frame):
     def __init__(self, master, content):
+        self.database = Database.Database()
+
         Frame.__init__(self, master)
         self.master = master
         self.content = content
-        self.master.geometry("1000x1200+000+000")
+        self.master.geometry("700x600+000+000")
         self.master['background'] = '#202020'
+
+        self.get_data()
 
         self.popup_menu = Menu(self.master, tearoff=0)
         self.display_table = ttk.Treeview(self.master)
 
         self.add_button = Button(self.master)
+        self.remove_row_button = Button(self.master)
         self.list_box = Listbox(self.master)
         self.widgets()
 
+    def get_data(self):
+        parse.add_tables(self.database, self.content)
+        parse.add_columns(self.database, self.content)
+        parse.add_rows(self.database, self.content)
+
     def widgets(self):
-        tables = get_tables(self.content)
-        self.display_tables(tables)
+        self.display_tables()
 
         self.list_box.config(width=10, height=1030, bg='#493358', bd=0,
                              fg='#ffffff', relief='sunken', borderwidth=0, highlightthickness=0)
 
         self.display_content()
 
-        self.add_button.config(text=("Insert into " + "table"), width=12, height=2, command=self.add_to_base)
+        self.add_button.config(text="Add row", width=15, height=2, command=self.add_to_base)
         self.add_button.place(x=70, y=20)
 
-    def display_tables(self, tables):
+        # self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
+        # self.remove_row_button.place(x=185, y=20)
+
+    def display_tables(self):
 
         self.popup_menu.add_command(label="hej")
         self.popup_menu.add_command(label="hej2")
@@ -41,6 +56,9 @@ class MainWindow(Frame):
 
         self.list_box.place(x=0, y=20)
         self.list_box.config(font=("Arial", 10))
+
+        tables = self.database.get_tables_names()
+
         for i, table in enumerate(tables):
             self.list_box.insert(i, table)
 
@@ -59,8 +77,12 @@ class MainWindow(Frame):
             for item in self.display_table.get_children():
                 self.display_table.delete(item)
             selection = self.list_box.get(selection[0])
-            serialized_data = get_data(self.content[selection])
-            columns = get_columns_names(self.content[selection])
+
+            current_table_obj = self.database.get_active(selection)
+
+            serialized_data = deepcopy(current_table_obj.get_rows())
+
+            columns = current_table_obj.get_column_names()
             columns.insert(0, 'Lp.')
             for i, j in enumerate(serialized_data):
                 j.insert(0, i)
@@ -80,5 +102,9 @@ class MainWindow(Frame):
         pop_up = Toplevel()
         selection = self.list_box.curselection()
         selection = self.list_box.get(selection[0])
+        current_table_obj = self.database.get_active(selection)
 
-        app = PopUpWindow(pop_up, self.content, selection, self)
+        app = PopUpWindow(pop_up, self.content, current_table_obj, self)
+
+    def remove_row(self):
+        pass
