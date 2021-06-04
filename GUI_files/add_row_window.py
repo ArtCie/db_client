@@ -1,26 +1,13 @@
 from tkinter import *
 
+from GUI_files.template import Template
 from tkinter import messagebox
 from Logic import Row
 
 
-class PopUpWindow(Frame):
-    def __init__(self, master, content, active_table, parent):
-        Frame.__init__(self, master)
-        self.parent = parent
-        self.master = master
-        self.content = content
-        self.active_table = active_table
-        self.enter_values = []
-        self.grid()
-        self.menubar = Menu(master)
-        self.button_accept = Button(master)
-        self.button_cancel = Button(master)
-
-        self.master['background'] = '#202020'
-        self.master.geometry("500x300+200+200")
-        self.master.title("Insert into ")
-
+class AddRowWindow(Template):
+    def __init__(self, master, active_table, parent):
+        Template.__init__(self, master, active_table, parent, "500x300+200+200")
         self.widgets()
         master.mainloop()
 

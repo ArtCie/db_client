@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
-from GUI_files.add_row_window import PopUpWindow
+from GUI_files.add_row_window import AddRowWindow
+from GUI_files.remove_row_window import RemoveRowWindow
 from Parse import parse
 from Logic import Database, Table
 
@@ -44,8 +45,8 @@ class MainWindow(Frame):
         self.add_button.config(text="Add row", width=15, height=2, command=self.add_to_base)
         self.add_button.place(x=70, y=20)
 
-        # self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
-        # self.remove_row_button.place(x=185, y=20)
+        self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
+        self.remove_row_button.place(x=185, y=20)
 
     def display_tables(self):
 
@@ -99,12 +100,17 @@ class MainWindow(Frame):
             self.display_table.place(x=70, y=60)
 
     def add_to_base(self):
-        pop_up = Toplevel()
+        add_row = Toplevel()
         selection = self.list_box.curselection()
         selection = self.list_box.get(selection[0])
         current_table_obj = self.database.get_active(selection)
 
-        app = PopUpWindow(pop_up, self.content, current_table_obj, self)
+        app = AddRowWindow(add_row, current_table_obj, self)
 
     def remove_row(self):
-        pass
+        remove_row = Toplevel()
+        selection = self.list_box.curselection()
+        selection = self.list_box.get(selection[0])
+        current_table = self.database.get_active(selection)
+
+        remove_window = RemoveRowWindow(remove_row, current_table, self)
