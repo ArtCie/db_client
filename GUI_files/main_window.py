@@ -6,6 +6,7 @@ from GUI_files.remove_row_window import RemoveRowWindow
 from GUI_files.add_column_window import AddColumnWindow
 from GUI_files.remove_column_window import RemoveColumnWindow
 from GUI_files.add_table_window import AddTableWindow
+from GUI_files.remove_table_window import RemoveTableWindow
 from Parse import parse
 from Logic import Database
 
@@ -32,6 +33,7 @@ class MainWindow(Frame):
         self.add_column_button = Button(self.master)
         self.remove_column_button = Button(self.master)
         self.add_table_button = Button(self.master)
+        self.remove_table_button = Button(self.master)
 
         self.list_box = Listbox(self.master)
         self.widgets()
@@ -63,6 +65,9 @@ class MainWindow(Frame):
 
         self.add_table_button.config(text="Add\ntable", width=9, height=2, command=self.add_table)
         self.add_table_button.place(x=0, y=295)
+
+        self.remove_table_button.config(text="Remove\ntable", width=9, height=2, command=self.remove_table)
+        self.remove_table_button.place(x=72, y=295)
 
     def display_tables(self):
         self.list_box.delete(0, END)
@@ -151,3 +156,7 @@ class MainWindow(Frame):
     def add_table(self):
         add_table = Toplevel()
         add_table_window = AddTableWindow(add_table, self.database, self)
+
+    def remove_table(self):
+        remove_table = Toplevel()
+        remove_table_window = RemoveTableWindow(remove_table, self.database, self)
