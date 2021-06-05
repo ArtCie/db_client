@@ -7,6 +7,7 @@ from GUI_files.add_column_window import AddColumnWindow
 from GUI_files.remove_column_window import RemoveColumnWindow
 from GUI_files.add_table_window import AddTableWindow
 from GUI_files.remove_table_window import RemoveTableWindow
+from GUI_files.filter_table_window import FilterTableWindow
 from Parse import parse
 from Logic import Database
 
@@ -34,6 +35,7 @@ class MainWindow(Frame):
         self.remove_column_button = Button(self.master)
         self.add_table_button = Button(self.master)
         self.remove_table_button = Button(self.master)
+        self.filter_table_button = Button(self.master)
 
         self.list_box = Listbox(self.master)
         self.widgets()
@@ -68,6 +70,9 @@ class MainWindow(Frame):
 
         self.remove_table_button.config(text="Remove\ntable", width=9, height=2, command=self.remove_table)
         self.remove_table_button.place(x=72, y=295)
+
+        self.filter_table_button.config(text="Filter table", width=15, height=2, command=self.filter_table)
+        self.filter_table_button.place(x=530, y=28)
 
     def display_tables(self):
         self.list_box.delete(0, END)
@@ -160,3 +165,11 @@ class MainWindow(Frame):
     def remove_table(self):
         remove_table = Toplevel()
         remove_table_window = RemoveTableWindow(remove_table, self.database, self)
+
+    def filter_table(self):
+        filter_table = Toplevel()
+        selection = self.list_box.curselection()
+        selection = self.list_box.get(selection[0])
+        current_table = self.database.get_active(selection)
+
+        filter_table_window = FilterTableWindow(filter_table, current_table, self)

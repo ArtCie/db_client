@@ -72,16 +72,24 @@ class Table:
         return None
 
     def query(self, query):
-        result = []
-        for i in self.rows:
-            row = self.get_dict(i)
-            res = eval(query)
-            if res(row) is True:
-                result.append(i.contents)
-        return result
+        # try:
+            result = []
+            for i in self.rows:
+                row = self.get_dict(i)
+                res = eval(query)
+                if res(row) is True:
+                    result.append(i.contents)
+            return result
+        # except SyntaxError:
+            # return False
 
     def get_dict(self, row):
         row_dict = {}
+        print("rzędy")
+        print(row.contents)
+        print("kolumny: ")
+        for i in self.columns:
+            print(i.name)
         for i, j in enumerate(row.contents):
             row_dict[self.columns[i].name] = j
         return row_dict
