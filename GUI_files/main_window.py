@@ -10,6 +10,8 @@ from GUI_files.remove_table_window import RemoveTableWindow
 from GUI_files.filter_table_window import FilterTableWindow
 from Parse import parse
 from Logic import Database
+from tkinter import filedialog
+from json import dump
 
 from copy import deepcopy
 
@@ -36,6 +38,7 @@ class MainWindow(Frame):
         self.add_table_button = Button(self.master)
         self.remove_table_button = Button(self.master)
         self.filter_table_button = Button(self.master)
+        self.save_button = Button(self.master)
 
         self.list_box = Listbox(self.master)
         self.widgets()
@@ -73,6 +76,9 @@ class MainWindow(Frame):
 
         self.filter_table_button.config(text="Filter table", width=15, height=2, command=self.filter_table)
         self.filter_table_button.place(x=530, y=28)
+
+        self.save_button.config(text="Save\ndatabase", width=9, height=2, command=self.save_table)
+        self.save_button.place(x=144, y=295)
 
     def display_tables(self):
         self.list_box.delete(0, END)
@@ -173,3 +179,8 @@ class MainWindow(Frame):
         current_table = self.database.get_active(selection)
 
         filter_table_window = FilterTableWindow(filter_table, current_table, self)
+
+    def save_table(self):
+        dump_dict = parse.get_json(self.database)
+        file = filedialog.asksaveasfile(mode='w', defaultextension='.json')
+        dump(dump_dict, file)

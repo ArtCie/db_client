@@ -24,14 +24,16 @@ def add_rows(db, content):
         for row in j["rows"]:
             db.Tables[i].add_row(Row.Row(row))
 
-#
-# def get_data(active_table):
-#     columns = list(active_table.keys())
-#     length = len(active_table[columns[0]]['data'])
-#     serialized_data = [[] for _ in range(length)]
-#     for i in active_table.values():
-#         counter = 0
-#         for each_value in i['data']:
-#             serialized_data[counter].append(each_value)
-#             counter += 1
-#     return serialized_data
+
+def get_json(db):
+    dump_dict = {}
+    for i in db.Tables:
+        columns = []
+        for j in zip(i.get_column_types(), i.get_column_names()):
+            columns.append([j[0].__name__, j[1]])
+        append_rows = []
+        for rows in i.rows:
+            append_rows.append(rows.contents)
+        temp_dict = {'columns': columns, 'rows': append_rows}
+        dump_dict[i.name] = temp_dict
+    return dump_dict
