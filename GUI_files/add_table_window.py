@@ -1,12 +1,10 @@
 from tkinter import *
 
-from GUI_files.template import Template
-from tkinter import messagebox
-from Logic import Row
 from Logic.Table import Table
 
 
 class AddTableWindow(Frame):
+    """Class represents add table window"""
     def __init__(self, master, database, parent):
         Frame.__init__(self, master)
         self.parent = parent
@@ -21,6 +19,7 @@ class AddTableWindow(Frame):
         master.mainloop()
 
     def widgets(self):
+        """Adjust details of widgets"""
         self.master.title("Add table")
         self.master['background'] = '#202020'
         self.master.geometry("350x100+200+200")
@@ -35,6 +34,7 @@ class AddTableWindow(Frame):
         self.button_cancel.place(x=240, y=70)
 
     def add(self):
+        """Method takes what was written by user and creates new table"""
         self.database.add_table(Table(self.entry_name.get()))
         self.parent.display_tables()
         self.master.withdraw()

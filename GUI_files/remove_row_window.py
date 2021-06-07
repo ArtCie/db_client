@@ -8,7 +8,9 @@ from Logic.Column import Column
 
 
 class RemoveRowWindow(Template):
+    """Class represents remove row window"""
     def __init__(self, master, active_table, parent):
+        """Constructor defines window objects"""
         Template.__init__(self, master, active_table, parent, "670x500+200+200")
 
         self.master.title("Remove row")
@@ -29,6 +31,7 @@ class RemoveRowWindow(Template):
         master.mainloop()
 
     def widgets(self):
+        """Adjust details of widgets"""
         Template.display_table(self.display_table, self.active_table)
         table = Table("remove")
         for i in zip(self.active_table.get_column_types(), self.active_table.get_column_names()):
@@ -48,11 +51,13 @@ class RemoveRowWindow(Template):
         self.button_cancel.place(x=520, y=400)
 
     def accept_window(self):
+        """Method calls window to ask user if he is certain to remove rows"""
         msg_box = messagebox.askquestion('Delete rows', 'Are you sure you want to delete these rows?', icon='warning')
         if msg_box == 'yes':
             self.remove()
 
     def remove(self):
+        """Method removes chosen rows"""
         for i in self.remove_data.get_children():
             item = self.remove_data.item(i)['values'][1:]
             remove_item = self.active_table.get_obj(item)
@@ -62,6 +67,7 @@ class RemoveRowWindow(Template):
 
     @staticmethod
     def move(table_in, table_out):
+        """Method moves from one ttk.Treview to another"""
         selection = table_out.selection()
         index = 0
         for i in selection:

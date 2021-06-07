@@ -6,6 +6,7 @@ from GUI_files import main_window
 
 
 class StartWindow(Frame):
+    """Class represents Start Window of app"""
     def __init__(self, master):
         Frame.__init__(self, master)
         self.grid()
@@ -16,6 +17,7 @@ class StartWindow(Frame):
         self.run(master)
 
     def widgets(self, master):
+        """Adjust details of widgets"""
         load = PhotoImage(file="source/cover.png")
         panel = Label(master, image=load, borderwidth=0, highlightthickness=0)
         panel.image = load
@@ -39,6 +41,7 @@ class StartWindow(Frame):
         open_database.place(x=350, y=450)
 
     def browse_files(self, master):
+        """Method opens browse file window, closes start window and opens main window of app"""
         filename = filedialog.askopenfilename(initialdir=os.getcwd(),
                                               title=r"Select a \".json\" extension file",
                                               filetypes=[("Json file", "*.json")])
@@ -46,6 +49,7 @@ class StartWindow(Frame):
         self.switch_windows(master, content)
 
     def new_file(self, master):
+        """Method switches windows - option with new file - passes empty file to main window"""
         sample = {"new_base": {
                   "columns": [],
                   "rows": []}}
@@ -53,11 +57,13 @@ class StartWindow(Frame):
 
     @staticmethod
     def switch_windows(master, content):
+        """Creates new window and destroying current one"""
         master.withdraw()
         root2 = Toplevel()
-        app2 = main_window.MainWindow(root2, content)
+        main_window.MainWindow(root2, content)
 
     def run(self, master):
+        """Creates main loop of app"""
         master.config(menu=self.menubar)
         self.widgets(master)
         master.mainloop()

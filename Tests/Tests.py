@@ -1,10 +1,9 @@
 import unittest
-from random import random
 
-from Table import Table
-from Column import Column
-from Row import Row
-from Database import Database
+from Logic.Table import Table
+from Logic.Column import Column
+from Logic.Row import Row
+from Logic.Database import Database
 
 
 class TestDb(unittest.TestCase):

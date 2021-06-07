@@ -8,7 +8,9 @@ from Logic.Column import Column
 
 
 class RemoveTableWindow(Frame):
+    """Class represents window to remove tables"""
     def __init__(self, master, database, parent):
+        """Construtor defines variables - buttons, ttk.Treeview objects and runs mainloop"""
         Frame.__init__(self, master)
 
         self.database = database
@@ -32,6 +34,7 @@ class RemoveTableWindow(Frame):
         master.mainloop()
 
     def widgets(self):
+        """Adjust details of widgets"""
         self.display_tables()
 
         self.button_right.config(text="=>", width=4, height=2,
@@ -51,11 +54,13 @@ class RemoveTableWindow(Frame):
         self.button_cancel.place(x=298, y=260)
 
     def accept_window(self):
+        """Method defines messagebox asking user if he is certain to delete tables"""
         msg_box = messagebox.askquestion('Delete tables', 'Are you sure you want to delete these tables?', icon='warning')
         if msg_box == 'yes':
             self.remove()
 
     def remove(self):
+        """Method removes table from database"""
         for i in self.remove_data.get_children():
             item = self.remove_data.item(i)['values'][1:]
             self.database.remove_table(self.database.get_active(item[0]))
@@ -64,6 +69,7 @@ class RemoveTableWindow(Frame):
 
     @staticmethod
     def move(table_in, table_out):
+        """Method moves items from one ttk.Treeview to another"""
         selection = table_out.selection()
         index = 0
         for i in selection:
@@ -82,6 +88,7 @@ class RemoveTableWindow(Frame):
             table_out.delete(i)
 
     def display_tables(self):
+        """Method to display both ttk.treeview tables"""
         first_row = ['Lp.', 'Table name']
         self.display_table['columns'] = first_row
         self.remove_data['columns'] = first_row
@@ -100,5 +107,6 @@ class RemoveTableWindow(Frame):
             self.display_table.insert(parent='', index=i, values=[i, j])
 
     def set_cols_size(self, index, num):
+        """Method sets size of columns"""
         self.display_table.column(index, width=num, stretch=NO)
         self.remove_data.column(index, width=num, stretch=NO)

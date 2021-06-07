@@ -6,6 +6,7 @@ from Logic.Column import Column
 
 
 class AddColumnWindow(Template):
+    """Class represents add column window"""
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "500x100+200+200")
         self.value = StringVar(self.master)
@@ -24,7 +25,7 @@ class AddColumnWindow(Template):
         master.mainloop()
 
     def widgets(self):
-
+        """Adjust details of widgets"""
         self.choose_one.grid(column=1, row=0, sticky=W)
 
         self.label_choose.place(x=20, y=20, width=140)
@@ -38,6 +39,7 @@ class AddColumnWindow(Template):
         self.button_cancel.place(x=400, y=70)
 
     def add(self):
+        """Method checks if it is possible to create column with given name and adds it to table"""
         try:
             new_col = Column(eval(self.options[self.value.get()]), self.entry_name.get())
             self.active_table.add_column(new_col)

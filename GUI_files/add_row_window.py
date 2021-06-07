@@ -6,6 +6,7 @@ from Logic import Row
 
 
 class AddRowWindow(Template):
+    """Class represents add row window"""
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "500x300+200+200")
         self.widgets()
@@ -13,6 +14,7 @@ class AddRowWindow(Template):
         master.mainloop()
 
     def widgets(self):
+        """Adjust details of widgets"""
         start, y = 20, 40
         types_ = self.active_table.get_column_types()
         columns = self.active_table.get_column_names()
@@ -29,6 +31,7 @@ class AddRowWindow(Template):
         self.button_cancel.place(x=400, y=250)
 
     def add(self):
+        """Method checks whether types value can be cast and add rows to table"""
         try:
             self.active_table.add_row(Row.Row([obj.get() for obj in self.enter_values]))
             self.parent.display_content()

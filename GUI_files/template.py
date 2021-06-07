@@ -3,7 +3,9 @@ from copy import deepcopy
 
 
 class Template(Frame):
+    """Class has repeatable methods for all windows"""
     def __init__(self, master, active_table, parent, size):
+        """Takes master window, active table, parent object and its size"""
         Frame.__init__(self, master)
         self.parent = parent
         self.master = master
@@ -19,6 +21,7 @@ class Template(Frame):
 
     @staticmethod
     def display_table(display_table, active_table):
+        """Method takes ttk.treeview object and inserts elements from active table object to it"""
         serialized_data = deepcopy(active_table.get_rows())
 
         columns = active_table.get_column_names()

@@ -1,9 +1,11 @@
 from GUI_files import start_window
 from tkinter import *
 
+
 def main():
+    """Defining new start_window"""
     root = Tk()
-    app = start_window.StartWindow(root)
+    start_window.StartWindow(root)
 
 
 if __name__ == '__main__':

@@ -17,7 +17,9 @@ from copy import deepcopy
 
 
 class MainWindow(Frame):
+    """Class represents main window"""
     def __init__(self, master, content):
+        """Constructor creates instance of Main Window and defines necessary widgets"""
         self.database = Database.Database()
 
         Frame.__init__(self, master)
@@ -44,11 +46,13 @@ class MainWindow(Frame):
         self.widgets()
 
     def get_data(self):
+        """Method parses content from file to database contents"""
         parse.add_tables(self.database, self.content)
         parse.add_columns(self.database, self.content)
         parse.add_rows(self.database, self.content)
 
     def widgets(self):
+        """Adjust details of widgets"""
         self.display_tables()
 
         self.list_box.config(width=10, height=15, bg='#493358', bd=0,
@@ -89,6 +93,7 @@ class MainWindow(Frame):
         self.save_button.place(x=144, y=295)
 
     def display_tables(self):
+        """Method displays table names"""
         self.list_box.delete(0, END)
 
         self.list_box.bind("<<ListboxSelect>>", self.display_content)
@@ -103,13 +108,14 @@ class MainWindow(Frame):
 
         self.list_box.select_set(0)
 
-    def display_menu(self, event):
-        try:
-            self.popup_menu.tk_popup(event.x_root, event.y_root)
-        finally:
-            self.popup_menu.grab_release()
+    # def display_menu(self, event):
+    #     try:
+    #         self.popup_menu.tk_popup(event.x_root, event.y_root)
+    #     finally:
+    #         self.popup_menu.grab_release()
 
     def display_content(self, event=0):
+        """Method displays active table content in ttk.Treeview object"""
         selection = self.list_box.curselection()
         if selection:
             for item in self.display_table.get_children():
@@ -146,11 +152,13 @@ class MainWindow(Frame):
         RemoveTableWindow(Toplevel(), self.database, self)
 
     def save_table(self):
+        """Method activates window to save database"""
         dump_dict = parse.get_json(self.database)
         file = filedialog.asksaveasfile(mode='w', defaultextension='.json')
         dump(dump_dict, file)
 
     def get_current_table(self):
+        """Method return selected table name"""
         selection = self.list_box.curselection()
         selection = self.list_box.get(selection[0])
         if selection:

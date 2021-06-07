@@ -3,11 +3,11 @@ from tkinter import ttk
 
 from GUI_files.template import Template
 from tkinter import messagebox
-from Logic.Table import Table
 from Logic.Column import Column
 
 
 class RemoveColumnWindow(Template):
+    """Class that represents remove column window"""
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "670x500+200+200")
 
@@ -29,6 +29,7 @@ class RemoveColumnWindow(Template):
         master.mainloop()
 
     def widgets(self):
+        """Adjust details of widgets"""
         self.display_columns()
 
         self.button_right.config(text="=>", width=4, height=2,
@@ -44,11 +45,13 @@ class RemoveColumnWindow(Template):
         self.button_cancel.place(x=520, y=400)
 
     def accept_window(self):
+        """Method calls window to ask user if he is certain to remove columns."""
         msg_box = messagebox.askquestion('Delete columns', 'Are you sure you want to delete these columns?', icon='warning')
         if msg_box == 'yes':
             self.remove()
 
     def remove(self):
+        """Method removes selected columns from table"""
         map_types = {
             "Tekst": str,
             "Liczba całkowita": int,
