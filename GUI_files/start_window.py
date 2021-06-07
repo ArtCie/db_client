@@ -26,7 +26,8 @@ class StartWindow(Frame):
                                  fg='#ffffff',
                                  relief='sunken',
                                  activebackground='#4f2b64',
-                                 activeforeground='#ffffff')
+                                 activeforeground='#ffffff',
+                                 command=lambda: self.new_file(master))
         open_database = Button(master, text="Open database", height=2, width=20,
                                bg='#453d49',
                                fg='#ffffff',
@@ -43,6 +44,9 @@ class StartWindow(Frame):
                                               filetypes=[("Json file", "*.json")])
         content = parse.establish_connection(filename)
         self.switch_windows(master, content)
+
+    def new_file(self, master):
+        self.switch_windows(master, {})
 
     @staticmethod
     def switch_windows(master, content):
