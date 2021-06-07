@@ -56,35 +56,40 @@ class MainWindow(Frame):
 
         self.display_content()
 
-        self.add_row_button.config(text="Add row", width=15, height=2, command=self.add_row)
+        self.add_row_button.config(text="Add row", width=15, height=2,
+                                   command=lambda: self.create_new_window(AddRowWindow))
         self.add_row_button.place(x=70, y=28)
 
-        self.remove_row_button.config(text="Remove row", width=15, height=2, command=self.remove_row)
+        self.remove_row_button.config(text="Remove row", width=15, height=2,
+                                      command=lambda: self.create_new_window(RemoveRowWindow))
         self.remove_row_button.place(x=185, y=28)
 
-        self.add_column_button.config(text="Add column", width=15, height=2, command=self.add_column)
+        self.add_column_button.config(text="Add column", width=15, height=2,
+                                      command=lambda: self.create_new_window(AddColumnWindow))
         self.add_column_button.place(x=300, y=28)
 
-        self.remove_column_button.config(text="Remove column", width=15, height=2, command=self.remove_column)
+        self.remove_column_button.config(text="Remove column", width=15, height=2,
+                                         command=lambda: self.create_new_window(RemoveColumnWindow))
         self.remove_column_button.place(x=415, y=28)
 
-        self.add_table_button.config(text="Add\ntable", width=9, height=2, command=self.add_table)
+        self.add_table_button.config(text="Add\ntable", width=9, height=2,
+                                     command=self.add_table)
         self.add_table_button.place(x=0, y=295)
 
-        self.remove_table_button.config(text="Remove\ntable", width=9, height=2, command=self.remove_table)
+        self.remove_table_button.config(text="Remove\ntable", width=9, height=2,
+                                        command=self.remove_table)
         self.remove_table_button.place(x=72, y=295)
 
-        self.filter_table_button.config(text="Filter table", width=15, height=2, command=self.filter_table)
+        self.filter_table_button.config(text="Filter table", width=15, height=2,
+                                        command=lambda: self.create_new_window(FilterTableWindow))
         self.filter_table_button.place(x=530, y=28)
 
-        self.save_button.config(text="Save\ndatabase", width=9, height=2, command=self.save_table)
+        self.save_button.config(text="Save\ndatabase", width=9, height=2,
+                                command=self.save_table)
         self.save_button.place(x=144, y=295)
 
     def display_tables(self):
         self.list_box.delete(0, END)
-
-        self.popup_menu.add_command(label="hej")
-        self.popup_menu.add_command(label="hej2")
 
         self.list_box.bind("<<ListboxSelect>>", self.display_content)
 
@@ -97,7 +102,6 @@ class MainWindow(Frame):
             self.list_box.insert(i, table)
 
         self.list_box.select_set(0)
-        self.list_box.bind("<Button-3>", self.display_menu)
 
     def display_menu(self, event):
         try:
@@ -132,55 +136,25 @@ class MainWindow(Frame):
                 self.display_table.insert(parent='', index=i, values=j)
             self.display_table.place(x=70, y=68)
 
-    def add_row(self):
-        add_row = Toplevel()
-        selection = self.list_box.curselection()
-        selection = self.list_box.get(selection[0])
-        current_table_obj = self.database.get_active(selection)
-
-        app = AddRowWindow(add_row, current_table_obj, self)
-
-    def remove_row(self):
-        remove_row = Toplevel()
-        selection = self.list_box.curselection()
-        selection = self.list_box.get(selection[0])
-        current_table = self.database.get_active(selection)
-
-        remove_window = RemoveRowWindow(remove_row, current_table, self)
-
-    def add_column(self):
-        add_column = Toplevel()
-        selection = self.list_box.curselection()
-        selection = self.list_box.get(selection[0])
-        current_table = self.database.get_active(selection)
-
-        add_column_window = AddColumnWindow(add_column, current_table, self)
-
-    def remove_column(self):
-        remove_column = Toplevel()
-        selection = self.list_box.curselection()
-        selection = self.list_box.get(selection[0])
-        current_table = self.database.get_active(selection)
-
-        remove_column_window = RemoveColumnWindow(remove_column, current_table, self)
+    def create_new_window(self, window_class):
+        window_class(Toplevel(), self.get_current_table(), self)
 
     def add_table(self):
-        add_table = Toplevel()
-        add_table_window = AddTableWindow(add_table, self.database, self)
+        AddTableWindow(Toplevel(), self.database, self)
 
     def remove_table(self):
-        remove_table = Toplevel()
-        remove_table_window = RemoveTableWindow(remove_table, self.database, self)
-
-    def filter_table(self):
-        filter_table = Toplevel()
-        selection = self.list_box.curselection()
-        selection = self.list_box.get(selection[0])
-        current_table = self.database.get_active(selection)
-
-        filter_table_window = FilterTableWindow(filter_table, current_table, self)
+        RemoveTableWindow(Toplevel(), self.database, self)
 
     def save_table(self):
         dump_dict = parse.get_json(self.database)
         file = filedialog.asksaveasfile(mode='w', defaultextension='.json')
         dump(dump_dict, file)
+
+    def get_current_table(self):
+        selection = self.list_box.curselection()
+        selection = self.list_box.get(selection[0])
+        if selection:
+            return self.database.get_active(selection)
+        else:
+            self.list_box.select_set(0)
+            self.get_current_table()

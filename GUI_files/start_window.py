@@ -46,7 +46,10 @@ class StartWindow(Frame):
         self.switch_windows(master, content)
 
     def new_file(self, master):
-        self.switch_windows(master, {})
+        sample = {"new_base": {
+                  "columns": [],
+                  "rows": []}}
+        self.switch_windows(master, sample)
 
     @staticmethod
     def switch_windows(master, content):
