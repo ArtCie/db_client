@@ -6,16 +6,13 @@ class Database:
 
     def add_table(self, table_obj):
         """Method check whether name is valid and then add table to Tables list"""
-        try:
-            if self.check_name(table_obj):
-                if self.check_tables(table_obj):
-                    self.Tables.append(table_obj)
-                else:
-                    print("Raise already in db")
+        if self.check_name(table_obj):
+            if self.check_tables(table_obj):
+                self.Tables.append(table_obj)
             else:
-                print("Raise wrong name")
-        except AssertionError:
-            return
+                raise AssertionError
+        else:
+            raise KeyError
 
     def check_tables(self, table_obj):
         """Method checks whether table object is present in Tables list"""
@@ -30,7 +27,7 @@ class Database:
         temp = table.name
         temp = temp.replace(" ", "")
         if len(temp) == 0:
-            raise AssertionError
+            return False
         else:
             return True
 

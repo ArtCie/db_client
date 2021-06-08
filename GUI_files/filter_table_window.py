@@ -69,8 +69,6 @@ class FilterTableWindow(Frame):
         for i, j in enumerate(self.result_table):
             j.insert(0, i)
         self.display_table['columns'] = columns
-        # for i in range(0, len(self.display_table['columns'])):
-        #     self.display_table.column(f'#{i + 1}', width=80)
 
         for i in columns:
             self.display_table.heading(i, text=i, anchor='w')

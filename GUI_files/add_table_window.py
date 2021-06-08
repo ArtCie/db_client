@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 from Logic.Table import Table
 
@@ -35,6 +36,11 @@ class AddTableWindow(Frame):
 
     def add(self):
         """Method takes what was written by user and creates new table"""
-        self.database.add_table(Table(self.entry_name.get()))
+        try:
+            self.database.add_table(Table(self.entry_name.get()))
+        except AssertionError:
+            messagebox.showerror("Error", "Table with given name is already in database!")
+        except KeyError:
+            messagebox.showerror("Error", "Name of table can't be empty")
         self.parent.display_tables()
         self.master.withdraw()

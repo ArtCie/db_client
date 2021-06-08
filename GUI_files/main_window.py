@@ -60,37 +60,37 @@ class MainWindow(Frame):
 
         self.display_content()
 
-        self.add_row_button.config(text="Add row", width=15, height=2,
+        self.add_row_button.config(text="Add\nrow", width=9, height=2,
                                    command=lambda: self.create_new_window(AddRowWindow))
         self.add_row_button.place(x=70, y=28)
 
-        self.remove_row_button.config(text="Remove row", width=15, height=2,
+        self.remove_row_button.config(text="Remove\nrow", width=9, height=2,
                                       command=lambda: self.create_new_window(RemoveRowWindow))
-        self.remove_row_button.place(x=185, y=28)
+        self.remove_row_button.place(x=142, y=28)
 
-        self.add_column_button.config(text="Add column", width=15, height=2,
+        self.add_column_button.config(text="Add\ncolumn", width=9, height=2,
                                       command=lambda: self.create_new_window(AddColumnWindow))
-        self.add_column_button.place(x=300, y=28)
+        self.add_column_button.place(x=214, y=28)
 
-        self.remove_column_button.config(text="Remove column", width=15, height=2,
+        self.remove_column_button.config(text="Remove\ncolumn", width=9, height=2,
                                          command=lambda: self.create_new_window(RemoveColumnWindow))
-        self.remove_column_button.place(x=415, y=28)
+        self.remove_column_button.place(x=286, y=28)
 
         self.add_table_button.config(text="Add\ntable", width=9, height=2,
                                      command=self.add_table)
-        self.add_table_button.place(x=0, y=295)
+        self.add_table_button.place(x=430, y=28)
 
         self.remove_table_button.config(text="Remove\ntable", width=9, height=2,
                                         command=self.remove_table)
-        self.remove_table_button.place(x=72, y=295)
+        self.remove_table_button.place(x=502, y=28)
 
-        self.filter_table_button.config(text="Filter table", width=15, height=2,
+        self.filter_table_button.config(text="Filter\ntable", width=9, height=2,
                                         command=lambda: self.create_new_window(FilterTableWindow))
-        self.filter_table_button.place(x=530, y=28)
+        self.filter_table_button.place(x=358, y=28)
 
         self.save_button.config(text="Save\ndatabase", width=9, height=2,
                                 command=self.save_table)
-        self.save_button.place(x=144, y=295)
+        self.save_button.place(x=600, y=295)
 
     def display_tables(self):
         """Method displays table names"""
@@ -107,12 +107,6 @@ class MainWindow(Frame):
             self.list_box.insert(i, table)
 
         self.list_box.select_set(0)
-
-    # def display_menu(self, event):
-    #     try:
-    #         self.popup_menu.tk_popup(event.x_root, event.y_root)
-    #     finally:
-    #         self.popup_menu.grab_release()
 
     def display_content(self, event=0):
         """Method displays active table content in ttk.Treeview object"""
@@ -155,6 +149,8 @@ class MainWindow(Frame):
         """Method activates window to save database"""
         dump_dict = parse.get_json(self.database)
         file = filedialog.asksaveasfile(mode='w', defaultextension='.json')
+        if not file:
+            return
         dump(dump_dict, file)
 
     def get_current_table(self):

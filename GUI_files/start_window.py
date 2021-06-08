@@ -45,6 +45,8 @@ class StartWindow(Frame):
         filename = filedialog.askopenfilename(initialdir=os.getcwd(),
                                               title=r"Select a \".json\" extension file",
                                               filetypes=[("Json file", "*.json")])
+        if not filename:
+            return
         content = parse.establish_connection(filename)
         self.switch_windows(master, content)
 

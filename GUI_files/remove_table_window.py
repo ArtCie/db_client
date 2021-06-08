@@ -10,7 +10,7 @@ from Logic.Column import Column
 class RemoveTableWindow(Frame):
     """Class represents window to remove tables"""
     def __init__(self, master, database, parent):
-        """Construtor defines variables - buttons, ttk.Treeview objects and runs mainloop"""
+        """Constructor defines variables - buttons, ttk.Treeview objects and runs mainloop"""
         Frame.__init__(self, master)
 
         self.database = database
@@ -38,10 +38,10 @@ class RemoveTableWindow(Frame):
         self.display_tables()
 
         self.button_right.config(text="=>", width=4, height=2,
-                                 command=lambda: self.move(self.remove_data, self.display_table))
+                                 command=lambda: Template.move(self.remove_data, self.display_table))
         self.button_right.place(x=200, y=80)
         self.button_left.config(text="<=", width=4, height=2,
-                                command=lambda: self.move(self.display_table, self.remove_data))
+                                command=lambda: Template.move(self.display_table, self.remove_data))
         self.button_left.place(x=200, y=150)
 
         self.master.geometry("470x350+200+200")
@@ -66,26 +66,6 @@ class RemoveTableWindow(Frame):
             self.database.remove_table(self.database.get_active(item[0]))
         self.parent.display_tables()
         self.master.withdraw()
-
-    @staticmethod
-    def move(table_in, table_out):
-        """Method moves items from one ttk.Treeview to another"""
-        selection = table_out.selection()
-        index = 0
-        for i in selection:
-            item = table_out.item(i)
-            if table_in.get_children():
-                for ind, child in enumerate(table_in.get_children()):
-                    temp_item = table_in.item(child)
-                    if int(temp_item['values'][0]) < int(item['values'][0]):
-                        table_in.insert(parent='', index=ind + 1, values=item['values'])
-                        break
-                else:
-                    table_in.insert(parent='', index=0, values=item['values'])
-            else:
-                table_in.insert(parent='', index=index, values=item['values'])
-                index += 1
-            table_out.delete(i)
 
     def display_tables(self):
         """Method to display both ttk.treeview tables"""

@@ -33,10 +33,10 @@ class RemoveColumnWindow(Template):
         self.display_columns()
 
         self.button_right.config(text="=>", width=4, height=2,
-                                 command=lambda: self.move(self.remove_data, self.display_table))
+                                 command=lambda: Template.move(self.remove_data, self.display_table))
         self.button_right.place(x=310, y=80)
         self.button_left.config(text="<=", width=4, height=2,
-                                command=lambda: self.move(self.display_table, self.remove_data))
+                                command=lambda: Template.move(self.display_table, self.remove_data))
         self.button_left.place(x=310, y=150)
 
         self.button_accept.config(text="Delete", width=15, height=2, command=self.accept_window)
@@ -64,24 +64,6 @@ class RemoveColumnWindow(Template):
         self.parent.display_content()
         self.master.withdraw()
 
-    @staticmethod
-    def move(table_in, table_out):
-        selection = table_out.selection()
-        index = 0
-        for i in selection:
-            item = table_out.item(i)
-            if table_in.get_children():
-                for ind, child in enumerate(table_in.get_children()):
-                    temp_item = table_in.item(child)
-                    if int(temp_item['values'][0]) < int(item['values'][0]):
-                        table_in.insert(parent='', index=ind + 1, values=item['values'])
-                        break
-                else:
-                    table_in.insert(parent='', index=0, values=item['values'])
-            else:
-                table_in.insert(parent='', index=index, values=item['values'])
-                index += 1
-            table_out.delete(i)
 
     def display_columns(self):
         first_row = ['Lp.', 'Column name', 'Type']

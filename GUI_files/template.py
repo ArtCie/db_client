@@ -40,3 +40,23 @@ class Template(Frame):
         display_table.heading('#0', text='', anchor=CENTER)
         for i, j in enumerate(serialized_data):
             display_table.insert(parent='', index=i, values=j)
+
+    @staticmethod
+    def move(table_in, table_out):
+        """Method moves from one ttk.Treview to another"""
+        selection = table_out.selection()
+        index = 0
+        for i in selection:
+            item = table_out.item(i)
+            if table_in.get_children():
+                for ind, child in enumerate(table_in.get_children()):
+                    temp_item = table_in.item(child)
+                    if int(temp_item['values'][0]) < int(item['values'][0]):
+                        table_in.insert(parent='', index=ind + 1, values=item['values'])
+                        break
+                else:
+                    table_in.insert(parent='', index=0, values=item['values'])
+            else:
+                table_in.insert(parent='', index=index, values=item['values'])
+                index += 1
+            table_out.delete(i)
