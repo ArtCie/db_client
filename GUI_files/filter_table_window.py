@@ -1,3 +1,5 @@
+from Exceptions.Exceptions import SyntaxErrorException
+
 from tkinter import messagebox
 from copy import deepcopy
 
@@ -35,10 +37,22 @@ class FilterTableWindow(Frame):
         self.entry_lambda.place(x=20, y=30, width=440, height=30)
         self.entry_lambda.insert(0, "lambda row: row['Col1'] operator val and/or row['Col2'] operator val")
 
-        self.button_filter.config(text="Filter", width=12, height=2, command=self.filter_table)
+        self.button_filter.config(text="Filter", width=12, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.filter_table)
         self.button_filter.place(x=667, y=80)
 
-        self.button_cancel.config(text="Finish", width=12, height=2, command=self.master.withdraw)
+        self.button_cancel.config(text="Finish", width=12, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.master.withdraw)
         self.button_cancel.place(x=667, y=320)
 
         self.display_tables()
@@ -55,8 +69,8 @@ class FilterTableWindow(Frame):
 
             self.display_tables()
 
-        except SyntaxError:
-            messagebox.showerror("Error", "Syntax error")
+        except SyntaxErrorException as err:
+            messagebox.showerror("Error", err)
 
     def display_tables(self):
         """Method display result table"""

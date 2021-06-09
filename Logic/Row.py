@@ -8,7 +8,7 @@ class Row:
         """Method checks whether all types and contents are valid"""
         for ind, type_ in enumerate(row_types):
             if self.try_cast(type_, self.contents[ind]) is False:
-                return False
+                return [type_, self.contents[ind]]
             self.contents[ind] = type_(self.contents[ind])
         return True
 

@@ -1,3 +1,6 @@
+from Exceptions.Exceptions import ColumnNameAlreadyInTableException
+
+
 class Column:
     """class represents Column object"""
     def __init__(self, column_type, name):
@@ -9,7 +12,7 @@ class Column:
         """Method go through all columns and try to find one with name matching"""
         for i in columns:
             if i.name == self.name:
-                raise AssertionError
+                raise ColumnNameAlreadyInTableException(f'Column "{self.name}" is already in the table!')
         return True
 
     def get_types(self):

@@ -1,3 +1,6 @@
+from Exceptions.Exceptions import WrongNameException
+from Exceptions.Exceptions import TableNameAlreadyInDatabaseException
+
 class Database:
     """Database class represents database object, contains list of table objects"""
     def __init__(self):
@@ -10,9 +13,9 @@ class Database:
             if self.check_tables(table_obj):
                 self.Tables.append(table_obj)
             else:
-                raise AssertionError
+                raise TableNameAlreadyInDatabaseException(f'Table "{table_obj.name}" is already in the table!')
         else:
-            raise KeyError
+            raise WrongNameException(f'{table_obj.name} name is not valid!')
 
     def check_tables(self, table_obj):
         """Method checks whether table object is present in Tables list"""

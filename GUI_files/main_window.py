@@ -25,21 +25,40 @@ class MainWindow(Frame):
         Frame.__init__(self, master)
         self.master = master
         self.content = content
-        self.master.geometry("700x400+000+000")
+        self.master.geometry("700x295+000+000")
         self.master['background'] = '#202020'
 
         self.get_data()
 
         self.popup_menu = Menu(self.master, tearoff=0)
+
+        style = ttk.Style(master)
+        style.theme_use("clam")
+
+        style.configure("Treeview", foreground="silver",
+                        background='silver',
+                        fieldbackground='#silver')
+
+        style.map('Treeview', background=[('selected', '#453d49')])
+
+        # style.configure("mystyle.Treeview", highlightthickness=0, bd=0,
+        #                 font=('Calibri', 11))  # Modify the font of the body
+        # style.configure("mystyle.Treeview.Heading", font=('Calibri', 13, 'bold'))  # Modify the font of the headings
+        # style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})], )  # Remove the borders
+        # style.configure("mystyle.Treeview", background="black", foreground="black", fieldbackground="black")
+
         self.display_table = ttk.Treeview(self.master, height=10)
+
+        # ttk.Style().configure("Treeview", background="black",
+        #                       foreground="black", fieldbackground="black")
 
         self.add_row_button = Button(self.master)
         self.remove_row_button = Button(self.master)
         self.add_column_button = Button(self.master)
         self.remove_column_button = Button(self.master)
+        self.filter_table_button = Button(self.master)
         self.add_table_button = Button(self.master)
         self.remove_table_button = Button(self.master)
-        self.filter_table_button = Button(self.master)
         self.save_button = Button(self.master)
 
         self.list_box = Listbox(self.master)
@@ -55,42 +74,85 @@ class MainWindow(Frame):
         """Adjust details of widgets"""
         self.display_tables()
 
-        self.list_box.config(width=10, height=15, bg='#493358', bd=0,
-                             fg='#ffffff', relief='sunken', borderwidth=0, highlightthickness=0)
+        self.list_box.config(width=10, height=16, bg='#453d49', bd=0,
+                             fg='#ffffff',
+                             relief='sunken',
+                             borderwidth=0,
+                             highlightthickness=0)
 
         self.display_content()
 
-        self.add_row_button.config(text="Add\nrow", width=9, height=2,
+        self.add_row_button.config(text="Add\nrow",
+                                   bg='#453d49',
+                                   fg='#ffffff',
+                                   relief='sunken',
+                                   activebackground='#4f2b64',
+                                   activeforeground='#ffffff',
                                    command=lambda: self.create_new_window(AddRowWindow))
-        self.add_row_button.place(x=70, y=28)
+        self.add_row_button.place(x=70, y=28, width=77, height=40)
 
-        self.remove_row_button.config(text="Remove\nrow", width=9, height=2,
+        self.remove_row_button.config(text="Remove\nrow",
+                                      bg='#453d49',
+                                      fg='#ffffff',
+                                      relief='sunken',
+                                      activebackground='#4f2b64',
+                                      activeforeground='#ffffff',
                                       command=lambda: self.create_new_window(RemoveRowWindow))
-        self.remove_row_button.place(x=142, y=28)
+        self.remove_row_button.place(x=145, y=28, width=77, height=40)
 
-        self.add_column_button.config(text="Add\ncolumn", width=9, height=2,
+        self.add_column_button.config(text="Add\ncolumn",
+                                      bg='#453d49',
+                                      fg='#ffffff',
+                                      relief='sunken',
+                                      activebackground='#4f2b64',
+                                      activeforeground='#ffffff',
                                       command=lambda: self.create_new_window(AddColumnWindow))
-        self.add_column_button.place(x=214, y=28)
+        self.add_column_button.place(x=220, y=28, width=77, height=40)
 
-        self.remove_column_button.config(text="Remove\ncolumn", width=9, height=2,
+        self.remove_column_button.config(text="Remove\ncolumn",
+                                         bg='#453d49',
+                                         fg='#ffffff',
+                                         relief='sunken',
+                                         activebackground='#4f2b64',
+                                         activeforeground='#ffffff',
                                          command=lambda: self.create_new_window(RemoveColumnWindow))
-        self.remove_column_button.place(x=286, y=28)
+        self.remove_column_button.place(x=294, y=28, width=80, height=40)
 
-        self.add_table_button.config(text="Add\ntable", width=9, height=2,
-                                     command=self.add_table)
-        self.add_table_button.place(x=430, y=28)
-
-        self.remove_table_button.config(text="Remove\ntable", width=9, height=2,
-                                        command=self.remove_table)
-        self.remove_table_button.place(x=502, y=28)
-
-        self.filter_table_button.config(text="Filter\ntable", width=9, height=2,
+        self.filter_table_button.config(text="Filter\ntable",
+                                        bg='#453d49',
+                                        fg='#ffffff',
+                                        relief='sunken',
+                                        activebackground='#4f2b64',
+                                        activeforeground='#ffffff',
                                         command=lambda: self.create_new_window(FilterTableWindow))
-        self.filter_table_button.place(x=358, y=28)
+        self.filter_table_button.place(x=372, y=28, width=77, height=40)
 
-        self.save_button.config(text="Save\ndatabase", width=9, height=2,
+        self.add_table_button.config(text="Add\ntable",
+                                     bg='#453d49',
+                                     fg='#ffffff',
+                                     relief='sunken',
+                                     activebackground='#4f2b64',
+                                     activeforeground='#ffffff',
+                                     command=self.add_table)
+        self.add_table_button.place(x=447, y=28, width=78, height=40)
+
+        self.remove_table_button.config(text="Remove\ntable",
+                                        bg='#453d49',
+                                        fg='#ffffff',
+                                        relief='sunken',
+                                        activebackground='#4f2b64',
+                                        activeforeground='#ffffff',
+                                        command=self.remove_table)
+        self.remove_table_button.place(x=523, y=28, width=77, height=40)
+
+        self.save_button.config(text="Save\ndatabase",
+                                bg='#453d49',
+                                fg='#ffffff',
+                                relief='sunken',
+                                activebackground='#4f2b64',
+                                activeforeground='#ffffff',
                                 command=self.save_table)
-        self.save_button.place(x=600, y=295)
+        self.save_button.place(x=592, y=28, width=78, height=40)
 
     def display_tables(self):
         """Method displays table names"""
@@ -121,7 +183,7 @@ class MainWindow(Frame):
             serialized_data = deepcopy(current_table_obj.get_rows())
 
             columns = current_table_obj.get_column_names()
-            columns.insert(0, 'Lp.')
+            columns.insert(0, 'No.')
             for i, j in enumerate(serialized_data):
                 j.insert(0, i)
             self.display_table['columns'] = columns

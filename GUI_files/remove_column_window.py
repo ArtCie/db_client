@@ -33,15 +33,37 @@ class RemoveColumnWindow(Template):
         self.display_columns()
 
         self.button_right.config(text="=>", width=4, height=2,
+                                 bg='#453d49',
+                                 fg='#ffffff',
+                                 relief='sunken',
+                                 activebackground='#4f2b64',
+                                 activeforeground='#ffffff',
                                  command=lambda: Template.move(self.remove_data, self.display_table))
         self.button_right.place(x=310, y=80)
         self.button_left.config(text="<=", width=4, height=2,
+                                bg='#453d49',
+                                fg='#ffffff',
+                                relief='sunken',
+                                activebackground='#4f2b64',
+                                activeforeground='#ffffff',
                                 command=lambda: Template.move(self.display_table, self.remove_data))
         self.button_left.place(x=310, y=150)
 
-        self.button_accept.config(text="Delete", width=15, height=2, command=self.accept_window)
+        self.button_accept.config(text="Delete", width=15, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.accept_window)
         self.button_accept.place(x=390, y=400)
-        self.button_cancel.config(text="Cancel", width=15, height=2, command=self.master.withdraw)
+        self.button_cancel.config(text="Cancel", width=15, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.master.withdraw)
         self.button_cancel.place(x=520, y=400)
 
     def accept_window(self):
@@ -63,7 +85,6 @@ class RemoveColumnWindow(Template):
             self.active_table.remove_column(remove_item)
         self.parent.display_content()
         self.master.withdraw()
-
 
     def display_columns(self):
         first_row = ['Lp.', 'Column name', 'Type']

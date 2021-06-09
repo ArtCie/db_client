@@ -1,4 +1,6 @@
 from tkinter import *
+from Exceptions.Exceptions import WrongNameException
+from Exceptions.Exceptions import ColumnNameAlreadyInTableException
 
 from GUI_files.template import Template
 from tkinter import messagebox
@@ -33,9 +35,21 @@ class AddColumnWindow(Template):
         self.entry_name.place(x=160, y=40, width=120, height=30)
         self.choose_one.place(x=20, y=40, width=140, height=30)
 
-        self.button_accept.config(text="Ok", width=12, height=1, command=self.add)
+        self.button_accept.config(text="Ok", width=12, height=1,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.add)
         self.button_accept.place(x=300, y=70)
-        self.button_cancel.config(text="Cancel", width=12, height=1, command=self.master.withdraw)
+        self.button_cancel.config(text="Cancel", width=12, height=1,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.master.withdraw)
         self.button_cancel.place(x=400, y=70)
 
     def add(self):
@@ -46,7 +60,7 @@ class AddColumnWindow(Template):
 
             self.parent.display_content()
             self.master.withdraw()
-        except AssertionError:
-            messagebox.showerror("Error", "Name of column must be unique!")
-        except ValueError:
-            messagebox.showerror("Error", "Cannot add column with empty name!")
+        except ColumnNameAlreadyInTableException as err:
+            messagebox.showerror("Error", err)
+        except WrongNameException as err:
+            messagebox.showerror("Error", err)

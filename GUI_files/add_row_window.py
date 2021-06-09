@@ -1,4 +1,5 @@
 from tkinter import *
+from Exceptions.Exceptions import UnableToCastException
 
 from GUI_files.template import Template
 from tkinter import messagebox
@@ -25,9 +26,21 @@ class AddRowWindow(Template):
             new_entry.place(x=start, y=y, width=120, height=20)
             start += 130
             self.enter_values.append(new_entry)
-        self.button_accept.config(text="Ok", width=12, height=2, command=self.add)
+        self.button_accept.config(text="Ok", width=12, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.add)
         self.button_accept.place(x=300, y=250)
-        self.button_cancel.config(text="Cancel", width=12, height=2, command=self.master.withdraw)
+        self.button_cancel.config(text="Cancel", width=12, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.master.withdraw)
         self.button_cancel.place(x=400, y=250)
 
     def add(self):
@@ -36,5 +49,5 @@ class AddRowWindow(Template):
             self.active_table.add_row(Row.Row([obj.get() for obj in self.enter_values]))
             self.parent.display_content()
             self.master.withdraw()
-        except ValueError:
-            messagebox.showerror("Error", "Unable to cast")
+        except UnableToCastException as err:
+            messagebox.showerror("Error", err)

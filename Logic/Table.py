@@ -1,3 +1,6 @@
+from Exceptions.Exceptions import WrongNameException
+from Exceptions.Exceptions import UnableToCastException
+from Exceptions.Exceptions import SyntaxErrorException
 
 class Table:
     """Class represents Table of database, takes Table name as argument"""
@@ -21,7 +24,7 @@ class Table:
         temp = name
         temp = temp.replace(" ", "")
         if len(temp) == 0:
-            raise ValueError
+            raise WrongNameException(f'"{name}" is not valid table name!')
         return True
 
     def remove_column(self, column_obj):
@@ -40,10 +43,11 @@ class Table:
     def add_row(self, row_obj):
         """Method add one row to table"""
         types = self.get_column_types()
-        if row_obj.check_casts(types):
+        cast_result = row_obj.check_casts(types)
+        if cast_result is True:
             self.rows.append(row_obj)
         else:
-            raise ValueError
+            raise UnableToCastException(f'Cannot cast "{cast_result[1]}" into class "{cast_result[0].__name__}"!')
 
     def remove_row(self, row_obj):
         """Method removes row from database"""
@@ -80,8 +84,8 @@ class Table:
         return None
 
     def query(self, query):
-            """Method parse lambda expression and returns result"""
-        # try:
+        """Method parse lambda expression and returns result"""
+        try:
             result = []
             for i in self.rows:
                 row = self.get_dict(i)
@@ -89,8 +93,8 @@ class Table:
                 if res(row) is True:
                     result.append(i.contents)
             return result
-        # except SyntaxError:
-            # return False
+        except SyntaxError:
+            raise SyntaxErrorException(f'"{query}":\n lambda expression is not valid!')
 
     def get_dict(self, row):
         """Method returns dictionary for lambda expression"""

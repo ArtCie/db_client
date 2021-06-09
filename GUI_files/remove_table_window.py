@@ -38,9 +38,19 @@ class RemoveTableWindow(Frame):
         self.display_tables()
 
         self.button_right.config(text="=>", width=4, height=2,
+                                 bg='#453d49',
+                                 fg='#ffffff',
+                                 relief='sunken',
+                                 activebackground='#4f2b64',
+                                 activeforeground='#ffffff',
                                  command=lambda: Template.move(self.remove_data, self.display_table))
         self.button_right.place(x=200, y=80)
         self.button_left.config(text="<=", width=4, height=2,
+                                bg='#453d49',
+                                fg='#ffffff',
+                                relief='sunken',
+                                activebackground='#4f2b64',
+                                activeforeground='#ffffff',
                                 command=lambda: Template.move(self.display_table, self.remove_data))
         self.button_left.place(x=200, y=150)
 
@@ -48,9 +58,21 @@ class RemoveTableWindow(Frame):
         self.master.title("Remove table")
         self.master['background'] = '#202020'
 
-        self.button_accept.config(text="Delete", width=15, height=2, command=self.accept_window)
+        self.button_accept.config(text="Delete", width=15, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.accept_window)
         self.button_accept.place(x=174, y=260)
-        self.button_cancel.config(text="Cancel", width=15, height=2, command=self.master.withdraw)
+        self.button_cancel.config(text="Cancel", width=15, height=2,
+                                  bg='#453d49',
+                                  fg='#ffffff',
+                                  relief='sunken',
+                                  activebackground='#4f2b64',
+                                  activeforeground='#ffffff',
+                                  command=self.master.withdraw)
         self.button_cancel.place(x=298, y=260)
 
     def accept_window(self):
