@@ -75,9 +75,9 @@ class RemoveColumnWindow(Template):
     def remove(self):
         """Method removes selected columns from table"""
         map_types = {
-            "Tekst": str,
-            "Liczba całkowita": int,
-            "Liczba rzeczywista": float
+            "Text": str,
+            "Integer": int,
+            "Float": float
         }
         for i in self.remove_data.get_children():
             item = self.remove_data.item(i)['values'][1:]
@@ -101,9 +101,9 @@ class RemoveColumnWindow(Template):
         self.set_cols_size('#0', 0)
 
         map_types = {
-            str: "Tekst",
-            int: "Liczba całkowita",
-            float: "Liczba rzeczywista"
+            str: "Text",
+            int: "Integer",
+            float: "Float"
         }
         columns = self.active_table.get_column_names()
         table_types = self.active_table.get_column_types()

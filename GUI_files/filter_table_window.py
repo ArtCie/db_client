@@ -62,7 +62,6 @@ class FilterTableWindow(Frame):
         try:
             self.result_table = []
             lambda_expression = self.entry_lambda.get()
-            print(lambda_expression)
             rows = self.active_table.query(lambda_expression)
             for i in rows:
                 self.result_table.append(i)

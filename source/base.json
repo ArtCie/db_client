@@ -1,5 +1,5 @@
 {
-  "base1": {
+  "table1": {
     "columns": [
       [
         "int",
@@ -41,7 +41,7 @@
       ]
     ]
   },
-  "base2": {
+  "table2": {
     "columns": [
       [
         "float",

@@ -9,7 +9,7 @@ from Logic import Row
 class AddRowWindow(Template):
     """Class represents add row window"""
     def __init__(self, master, active_table, parent):
-        Template.__init__(self, master, active_table, parent, "500x300+200+200")
+        Template.__init__(self, master, active_table, parent, "500x150+200+200")
         self.widgets()
         self.master.title("Add row")
         master.mainloop()
@@ -33,7 +33,7 @@ class AddRowWindow(Template):
                                   activebackground='#4f2b64',
                                   activeforeground='#ffffff',
                                   command=self.add)
-        self.button_accept.place(x=300, y=250)
+        self.button_accept.place(x=300, y=100)
         self.button_cancel.config(text="Cancel", width=12, height=2,
                                   bg='#453d49',
                                   fg='#ffffff',
@@ -41,7 +41,7 @@ class AddRowWindow(Template):
                                   activebackground='#4f2b64',
                                   activeforeground='#ffffff',
                                   command=self.master.withdraw)
-        self.button_cancel.place(x=400, y=250)
+        self.button_cancel.place(x=400, y=100)
 
     def add(self):
         """Method checks whether types value can be cast and add rows to table"""

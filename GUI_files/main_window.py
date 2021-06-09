@@ -41,16 +41,8 @@ class MainWindow(Frame):
 
         style.map('Treeview', background=[('selected', '#453d49')])
 
-        # style.configure("mystyle.Treeview", highlightthickness=0, bd=0,
-        #                 font=('Calibri', 11))  # Modify the font of the body
-        # style.configure("mystyle.Treeview.Heading", font=('Calibri', 13, 'bold'))  # Modify the font of the headings
-        # style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})], )  # Remove the borders
-        # style.configure("mystyle.Treeview", background="black", foreground="black", fieldbackground="black")
-
         self.display_table = ttk.Treeview(self.master, height=10)
 
-        # ttk.Style().configure("Treeview", background="black",
-        #                       foreground="black", fieldbackground="black")
 
         self.add_row_button = Button(self.master)
         self.remove_row_button = Button(self.master)
