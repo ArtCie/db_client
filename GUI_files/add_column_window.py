@@ -12,10 +12,10 @@ class AddColumnWindow(Template):
     def __init__(self, master, active_table, parent):
         Template.__init__(self, master, active_table, parent, "500x100+200+200")
         self.value = StringVar(self.master)
-        self.options = {"Liczba całkowita": "int",
-                        "Liczba rzeczywista": "float",
-                        "Tekst": "str"}
-        self.value.set("Tekst")
+        self.options = {"Integer number": "int",
+                        "Float number": "float",
+                        "Text": "str"}
+        self.value.set("Text")
         self.choose_one = OptionMenu(self.master, self.value, *(self.options.keys()))
         self.label_choose = Label(self.master, text="Choose type", anchor="w", justify=LEFT)
         self.label_name = Label(self.master, text="Enter column name", anchor="w", justify=LEFT)
