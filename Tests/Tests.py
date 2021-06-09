@@ -17,9 +17,8 @@ class TestDb(unittest.TestCase):
         ######
         # 1. Utworzenie tabeli "test1" z kolumnami liczbową "ID"(typ int),
         # dwoma tekstowymi "imię" oraz "nazwisko" oraz liczbową "wzrost"(typ float).
-        base = Database()
         test_table = Table("test1")
-        base.add_table(test_table)
+        self.database.add_table(test_table)
         test_table.add_column(Column(int, "ID"))
         test_table.add_column(Column(str, "imię"))
         test_table.add_column(Column(str, "nazwisko"))
@@ -51,7 +50,7 @@ class TestDb(unittest.TestCase):
 
         #######
         # 6. Wyświetlenie zawartości tabeli "test1".
-        result_table = base.get_active("test1")
+        result_table = self.database.get_active("test1")
         self.assertEqual([[1, 'Roch', 'Przyłbipięt', 1.5],
                           [2, 'Ziemniaczysław', 'Bulwiasty', 1.91]],
                          result_table.get_rows())  # test 7
@@ -70,7 +69,6 @@ class TestDb(unittest.TestCase):
         test_table.remove_row(add_row1)
         test_table.remove_row(add_row2)
 
-        print(test_table.get_rows())
         self.assertEqual([[1, 'Roch', 'Przyłbipięt', 1.5],
                           [2, 'Ziemniaczysław', 'Bulwiasty', 1.91],
                           [5, 'Karol', 'Najciekawszy', 1.7]],
@@ -81,9 +79,8 @@ class TestDb(unittest.TestCase):
         ########
         # 8. Utworzenie tabeli "test2" z kolumnami “reserved" typu string oraz "kolor" typu liczba
         # całkowita.
-        base = Database()
         test_table2 = Table("test2")
-        base.add_table(test_table2)
+        self.database.add_table(test_table2)
         test_table2.add_column(Column(str, "reserved"))
         test_table2.add_column(Column(int, "kolor"))
 
@@ -103,27 +100,26 @@ class TestDb(unittest.TestCase):
 
         #########
         # 11. Usunięcie tabeli “test2”, najpierw anulowanie operacji, a potem jej akceptacja.
-        base.remove_table(test_table2)
-        self.assertEqual([], base.get_tables_names())  # test 11
+        self.database.remove_table(test_table2)
+        self.assertEqual([], self.database.get_tables_names())  # test 11
 
         #########
     def test3_wrong_table(self):
         #########
         # 12. Próba utworzenia tabeli bez nazwy - oczekiwane niepowodzenie.
-        base = Database()
         test_table3 = Table("")
-        self.assertRaises(WrongNameException, base.add_table, test_table3)  # test 12
+        self.assertRaises(WrongNameException, self.database.add_table, test_table3)  # test 12
 
         ########
         # 13. Próba utworzenia tabeli o nazwie " " (spacja) - oczekiwane niepowodzenie.
         test_table4 = Table(" ")
-        self.assertRaises(WrongNameException, base.add_table, test_table4)  # test 13
+        self.assertRaises(WrongNameException, self.database.add_table, test_table4)  # test 13
 
         ########
         # 14. Próba utworzenia tabeli z kolumną bez nazwy - oczekiwane niepowodzenie.
 
         test_table5 = Table("Cols_check")
-        base.add_table(test_table5)
+        self.database.add_table(test_table5)
         self.assertRaises(WrongNameException, test_table5.add_column, Column(str, ""))  # test 14
 
         ########
@@ -136,9 +132,8 @@ class TestDb(unittest.TestCase):
         # 16. Wypełnij tabelę "test" danymi testowymi (kolejne wartości "ID", "wzrost" między 1.0 i 2.0),
         # wyszukaj wiersze dla których “wzrost” ma wartość podaną przez prowadzącego oraz
         # “ID” jest liczbą parzystą lub nieparzystą (zależnie od woli prowadzącego).
-        base = Database()
         test_table_lambda = Table("lambda_check")
-        base.add_table(test_table_lambda)
+        self.database.add_table(test_table_lambda)
         test_table_lambda.add_column(Column(int, "ID"))
         test_table_lambda.add_column(Column(float, "wzrost"))
 
